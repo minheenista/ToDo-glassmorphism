@@ -25,6 +25,7 @@ p {
   color: #658ec6;
   font-weight: 500;
   opacity: 0.8;
+  margin: 0;
 }
 
 h3 {
@@ -216,6 +217,21 @@ main {
 
 }
 
+del {
+  color: #426696;
+  font-weight: bold;
+  font-size: medium;
+}
+
+.card button.completed:disabled{
+  background: linear-gradient(to right top, #67df65, #6ceb6e);
+  text-decoration: line-through;
+}
+
+.card button:disabled:hover{
+  transform: none;
+}
+
 .card button:hover {
   transform: scale(1.1);
 }
@@ -282,13 +298,7 @@ main {
   max-height: 80%;
 }
 
-/* ============================================================= */
-
-
-
-h2 {
-  margin: 0; /* Elimina el margen superior predeterminado del h2 */
-}
+/* ======================== ESTILOS SELECTOR DE TEMA ===================================== */
 
 .theme {
   margin-top: 5px; /* Ajusta según sea necesario para dar espacio entre el título y el select */
@@ -457,7 +467,7 @@ select {
 
 .modal-content {
   background-color: #fff;
-  margin: 15% auto;
+  margin: 10% auto;
   padding: 20px;
   border-radius: 1rem;
   width: 60%;

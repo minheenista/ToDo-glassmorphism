@@ -22,28 +22,44 @@
         <div class="container">
           <div class="form">
             <h2>Registro</h2>
-            <form id="loginForm">
+            <form id="registerForm">
               <div class="inputBox">
-                <input type="text" placeholder="Nombre" id="name" />
+                <input type="text" placeholder="Nombre" id="name" name="name" />
               </div>
               <div class="inputBox">
-                <input type="text" placeholder="Apellido" id="lastname" />
+                <input
+                  type="text"
+                  placeholder="Apellido"
+                  id="lastname"
+                  name="lastname"
+                />
               </div>
               <div class="inputBox">
-                <input type="text" placeholder="Usuario" id="username" />
+                <input
+                  type="text"
+                  placeholder="Usuario"
+                  id="username"
+                  name="user"
+                />
               </div>
               <div class="inputBox">
                 <input
                   type="text"
                   placeholder="Correo Electrónico"
                   id="email"
+                  name="email"
                 />
               </div>
               <div class="inputBox">
-                <input type="password" placeholder="Contraseña" id="password" />
+                <input
+                  type="password"
+                  placeholder="Contraseña"
+                  id="svpassword"
+                  name="svpassword"
+                />
               </div>
               <div class="inputBox">
-                <input type="submit" value="Registrar" onclick="register()" />
+                <input type="submit" value="Registrar" />
               </div>
               <!-- <p class="forget">
                 Olvidaste tu contraseña ? <a href="#">Haz clic aqui</a>
@@ -57,5 +73,39 @@
       </div>
     </section>
   </body>
-  <script src="scripts/scriptLogin.js"></script>
+  <script>
+    fetch("http://10.1.142.212:3000/users")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => console.log(error));
+
+    const formRegister = document.getElementById("registerForm");
+
+    formRegister.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const formData = new FormData(formRegister);
+      console.log(formData);
+      formData.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+      });
+
+      const data = new URLSearchParams(formData);
+      console.log(data);
+      fetch("http://10.1.142.212:3000/users", {
+        method: "POST",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          alert("Registro exitoso");
+          window.location.href = "../login.html";
+        })
+        .catch((error) => console.log(error));
+    });
+  </script>
 </html>

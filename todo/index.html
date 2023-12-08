@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Glass Website</title>
+    <title>ToDO List</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       rel="stylesheet"
@@ -30,10 +30,10 @@
               <span class="material-symbols-rounded"> list </span>
               <h2>Tareas</h2>
             </div>
-            <div class="link">
+            <!-- <div class="link">
               <span class="material-symbols-rounded"> check_circle </span>
               <h2>Completadas</h2>
-            </div>
+            </div> -->
             <!-- <div class="link">
               <span class="material-symbols-rounded"> palette </span>
               <h2>Tema</h2>
@@ -61,7 +61,7 @@
             <div class="line"></div>
           </div>
           <div class="cards">
-            <div class="card">
+            <!-- <div class="card">
               <img
                 class="imgTarea"
                 src="./images/minhee.jpg"
@@ -87,8 +87,8 @@
                 <span class="material-symbols-rounded"> edit </span>
               </button>
               <button class="button" aria-hidden="true">Completada</button>
-            </div>
-            <div class="card">
+            </div> -->
+            <!-- <div class="card">
               <img
                 class="imgTarea"
                 src="./images/chaehyun.jpg"
@@ -199,7 +199,7 @@
                 <span class="material-symbols-rounded"> edit </span>
               </button>
               <button class="button" aria-hidden="true">Completada</button>
-            </div>
+            </div> -->
           </div>
         </div>
 
@@ -214,10 +214,15 @@
             <span class="close" id="closeModalBtn">&times;</span>
             <h2>Agregar Nueva Tarea</h2>
             <div class="form">
-              <form>
+              <form id="formCrearTarea">
                 <div class="inputBox">
                   <h4>Titulo de la tarea</h4>
-                  <input type="text" placeholder="Titulo" id="titleTask" />
+                  <input
+                    type="text"
+                    placeholder="Titulo"
+                    id="titleTask"
+                    name="title"
+                  />
                 </div>
                 <div class="inputBox">
                   <h4>Descripcion de la tarea</h4>
@@ -225,11 +230,12 @@
                     type="text"
                     placeholder="Descripcion"
                     id="descriptionTask"
+                    name="description"
                   />
                 </div>
 
                 <div class="inputBox">
-                  <input type="submit" value="Crear" onclick="crearTarea()" />
+                  <input type="submit" value="Crear" />
                 </div>
               </form>
             </div>
@@ -242,13 +248,14 @@
             <span class="close" id="closeModalBtn">&times;</span>
             <h2>Editar Tarea</h2>
             <div class="form">
-              <form>
+              <form id="formEditarTarea">
                 <div class="inputBox">
                   <h4>Titulo de la tarea</h4>
                   <input
                     type="text"
                     placeholder="Titulo"
                     id="titleTaskUpdate"
+                    name="title"
                   />
                 </div>
                 <div class="inputBox">
@@ -257,6 +264,7 @@
                     type="text"
                     placeholder="Descripcion"
                     id="descriptionTaskUpdate"
+                    name="description"
                   />
                 </div>
 
@@ -267,6 +275,14 @@
                     onclick="updateTarea()"
                   />
                 </div>
+
+                <button
+                  class="button"
+                  aria-hidden="true"
+                  onclick="cerrarModalEditar()"
+                >
+                  Cancelar
+                </button>
               </form>
             </div>
           </div>
@@ -279,10 +295,20 @@
             <h2>Eliminar Tarea</h2>
             <p>¿Estas seguro de eliminar esta tarea?</p>
 
-            <button class="button-delete" aria-hidden="true" id="">
+            <button
+              class="button-delete"
+              aria-hidden="true"
+              onclick="eliminarTarea()"
+            >
               Eliminar
             </button>
-            <button class="button" aria-hidden="true">Cancelar</button>
+            <button
+              class="button"
+              aria-hidden="true"
+              onclick="cerrarModalEliminar()"
+            >
+              Cancelar
+            </button>
           </div>
         </div>
       </section>
@@ -292,4 +318,298 @@
   </body>
 
   <script src="../scripts/scriptIndex.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Lógica a ejecutar cuando la página se carga
+      getTareas();
+    });
+
+    // token
+    const token = localStorage.getItem("token");
+    console.log("TOKEN 1", token);
+
+    // OBTENER TODAS LAS TAREAS
+    function getTareas() {
+      fetch("http://10.1.142.212:3000/tasks", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data.data);
+          tareas = data.data[0];
+          tareas.forEach((task) => {
+            const card = `<div class="card" data-task-id="${task._id}">
+              <img
+                class="imgTarea"
+                src="./images/kaneki.jpg"
+                alt=""
+                onclick="mostrarImagen(this)"
+              />
+              <div class="card-info">
+                <h2>${task.title}</h2>
+                <p>${task.description}</p>
+              </div>
+              <button
+                class="button-sm delete-button"
+                aria-hidden="true"
+                id="deleteBtn-${task._id}"
+                onclick="abrirModalEliminar('${task._id}')"
+              >
+                <span class="material-symbols-rounded" onclick="eliminarTarea('${task._id}')"> delete </span>
+              </button>
+              <button
+                class="button-sm edit-button"
+                aria-hidden="true"
+                id="editbtn-${task._id}"
+                onclick="abrirModalEditar('${task._id}')"
+              >
+                <span class="material-symbols-rounded"> edit </span>
+              </button>
+              <button class="button" aria-hidden="true"
+              id="completeTarea-${task._id}"
+                onclick="completeTask('${task._id}')"
+              >Completada</button>
+            </div>`;
+            document.querySelector(".cards").innerHTML += card;
+          });
+        })
+        .catch((error) => console.log(error));
+    }
+
+    // CREAR TAREA
+    const formCrearTarea = document.getElementById("formCrearTarea");
+
+    formCrearTarea.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const formCrearData = new FormData(formCrearTarea);
+      console.log(formCrearData);
+      formCrearData.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+      });
+
+      const data = new URLSearchParams(formCrearData);
+      console.log(data);
+      fetch("http://10.1.142.212:3000/tasks", {
+        method: "POST",
+        headers: {
+          // Incluir el token en la cabecera de autorización
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/x-www-form-urlencoded", // Ajusta según el tipo de datos que estás enviando
+        },
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          console.log(data.data[0].title);
+          alert("Tarea creada exitosamente");
+          const card = `<div class="card">
+              <img
+                class="imgTarea"
+                src="./images/kaneki.jpg"
+                alt=""
+                onclick="mostrarImagen(this)"
+              />
+              <div class="card-info">
+                <h2>${data.data[0].title}</h2>
+                <p>${data.data[0].description}</p>
+              </div>
+              <button
+                class="button-sm delete-button"
+                aria-hidden="true"
+                id="deleteBtn-${data.data[0]._id}"
+                onclick="abrirModalEliminar('${data.data[0]._id}')"
+              >
+                <span class="material-symbols-rounded"> delete </span>
+              </button>
+              <button
+                class="button-sm edit-button"
+                aria-hidden="true"
+                id="editbtn-${data.data[0]._id}"
+                onclick="abrirModalEditar('${data.data[0]._id}')"
+              >
+                <span class="material-symbols-rounded"> edit </span>
+              </button>
+              <button class="button" aria-hidden="true">Completada</button>
+            </div>`;
+          document.querySelector(".cards").innerHTML += card;
+          document.getElementById("formCrearTarea").reset();
+          var modal = document.getElementById("modalCrearTarea");
+          modal.style.display = "none";
+        })
+        .catch((error) => console.log(error));
+    });
+
+    // ELIMINAR TAREA
+
+    function abrirModalEliminar(taskId) {
+      const modal = document.getElementById("modalEliminarTarea");
+      modal.style.display = "block";
+
+      // Guarda el ID de la tarea actualmente seleccionada en una variable global
+      tareaSeleccionadaId = taskId;
+      console.log("tarea a eliminar", tareaSeleccionadaId);
+    }
+
+    function cerrarModalEliminar() {
+      const modal = document.getElementById("modalEliminarTarea");
+      modal.style.display = "none";
+    }
+
+    var modalEliminar = document.getElementById("modalEliminarTarea");
+
+    // Cierra el modal si se hace clic fuera de él
+    window.addEventListener("click", function (event) {
+      if (event.target == modalEliminar) {
+        modalEliminar.style.display = "none";
+      }
+    });
+
+    function eliminarTarea() {
+      // Recupera el ID de la tarea actualmente seleccionada desde la variable global
+      const taskId = tareaSeleccionadaId;
+      console.log("tarea a eliminar 2", taskId);
+
+      // Lógica para eliminar la tarea con el ID taskId
+      fetch(`http://10.1.142.212:3000/tasks/${taskId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data.data);
+          document.querySelector(".cards").innerHTML = "";
+
+          getTareas();
+          cerrarModalEliminar();
+        })
+        .catch((error) => console.log(error));
+    }
+
+    // ================ MARCAR TAREA COMPLETADA ============================
+    function completeTask(taskId) {
+      console.log("tarea a completar", taskId);
+      fetch(`http://10.1.142.212:3000/tasks/${taskId}/status`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data.data);
+          alert("Tarea completada exitosamente");
+          const card = `<div class="card">
+              <img
+                class="imgTarea"
+                src="./images/kaneki.jpg"
+                alt=""
+                onclick="mostrarImagen(this)"
+              />
+              <div class="card-info">
+                <del><h2>${data.data[0].title}</h2></del>
+                <del><p>${data.data[0].description}</p></del>
+              </div>
+              <button
+                class="button-sm delete-button"
+                aria-hidden="true"
+                id="deleteBtn-${data.data[0]._id}"
+                onclick="abrirModalEliminar('${data.data[0]._id}')"
+              >
+                <span class="material-symbols-rounded"> delete </span>
+              </button>
+              
+              <button class="button completed" aria-hidden="true" disabled>COMPLETADA</button>
+            </div>`;
+          document.querySelector(".cards").innerHTML += card;
+        });
+    }
+
+    //  EDITAR TAREA ======================================
+    function abrirModalEditar(taskId) {
+      const modal = document.getElementById("modalEditarTarea");
+      modal.style.display = "block";
+
+      // Guarda el ID de la tarea actualmente seleccionada en una variable global
+      tareaSeleccionadaId = taskId;
+      console.log("tarea a editar", tareaSeleccionadaId);
+      fetch(`http://10.1.142.212:3000/tasks/${tareaSeleccionadaId}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data.data);
+          document.getElementById("titleTaskUpdate").value = data.data[0].title;
+          document.getElementById("descriptionTaskUpdate").value =
+            data.data[0].description;
+        })
+        .catch((error) => console.log(error));
+    }
+    function cerrarModalEditar() {
+      const modal = document.getElementById("modalEditarTarea");
+      modal.style.display = "none";
+    }
+
+    var modalEditar = document.getElementById("modalEditarTarea");
+
+    // Cierra el modal si se hace clic fuera de él
+    window.addEventListener("click", function (event) {
+      if (event.target == modalEditar) {
+        modalEditar.style.display = "none";
+      }
+    });
+
+    function updateTarea() {
+      // Recupera el ID de la tarea actualmente seleccionada desde la variable global
+      const taskId = tareaSeleccionadaId;
+      console.log("tarea a editar 2", taskId);
+
+      const formEditarTarea = document.getElementById("formEditarTarea");
+
+      formEditarTarea.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const formEditarData = new FormData(formEditarTarea);
+        console.log(formEditarData);
+        formEditarData.forEach((value, key) => {
+          console.log(`${key}: ${value}`);
+        });
+
+        const data = new URLSearchParams(formEditarData);
+        console.log(data);
+        fetch(`http://10.1.142.212:3000/tasks/${taskId}`, {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: data,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            alert("Tarea actualizada exitosamente");
+            document.querySelector(".cards").innerHTML = "";
+            getTareas();
+            cerrarModalEditar();
+          })
+          .catch((error) => console.log(error));
+      });
+    }
+  </script>
 </html>
