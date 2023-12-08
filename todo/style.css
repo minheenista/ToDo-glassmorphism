@@ -1,0 +1,646 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.material-symbols-rounded {
+  color: lightseagreen;
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 700,
+  'GRAD' 200,
+  'opsz' 36
+}
+
+h1 {
+  color: #426696;
+  font-weight: 600;
+  font-size: 3rem;
+  opacity: 0.8;
+}
+
+h2,
+p {
+  color: #658ec6;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+h3 {
+  color: #426696;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+main {
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(to right top, #65dfc9, #6cdbeb);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+}
+
+.glass {
+  margin: 50px;
+  background: white;
+  min-height: 80vh;
+  width: 80%;
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.3)
+  );
+  border-radius: 2rem;
+  z-index: 2;
+  backdrop-filter: blur(2rem);
+  display: flex;
+}
+.circle1,
+.circle2 {
+  background: white;
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.3)
+  );
+  height: 20rem;
+  width: 20rem;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.circle1 {
+  top: 5%;
+  right: 15%;
+}
+.circle2 {
+  bottom: 5%;
+  left: 10%;
+}
+/* ================== BARRA LATERAL ======================== */
+.dashboard {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  text-align: start;
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.3)
+  );
+  border-radius: 2rem;
+  padding: 0 1rem;
+}
+.user {
+  margin-top: 10%;
+}
+.user img{
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  border: 2px solid #65dfc9;
+  margin-bottom: 20px;
+}
+.link {
+  display: flex;
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.3)
+  );
+  border-radius: 1rem;
+  margin: 2rem 0rem;
+  padding: 1rem 3rem;
+  align-items: center;
+}
+
+.active {
+  background: linear-gradient(to right top, #acf6e8, #b4f2fb);
+  color: white;
+}
+
+.link h2 {
+  padding: 0rem 2rem;
+}
+
+.theme {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+/* ============= TITULO DE TAREAS PENDIENTES =================== */
+.status {
+  margin-bottom: 0.5rem;
+  display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.status .line {
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.3)
+  );
+  border: none;
+  width: 70%;
+  padding: 0.5rem;
+  border-radius: 2rem;
+}
+
+/* ======================= CONTENIDO ======================= */
+
+.imgTarea {
+  height: 3.5rem;
+  width: 3.5rem;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+.games {
+  margin: 2rem 4rem;
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+}
+
+.card {
+  display: flex;
+  background: linear-gradient(
+    to left top,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.5)
+  );
+  border-radius: 1rem;
+  margin: 2rem 0.5rem 2rem 0rem;
+  padding: 1rem;
+  box-shadow: 6px 6px 20px rgba(122, 122, 122, 0.212);
+  overflow: hidden;
+  align-items: center;
+  justify-items: flex-start;
+}
+
+.card-info {
+  display: flex;
+  margin-left: 2rem;
+  flex-direction: column;
+  justify-content: start;
+
+}
+
+.card button {
+  position: relative; 
+  background: linear-gradient(to right top, #65dfc9, #6cdbeb);
+  border: none;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  margin-right: 0.5rem;
+  align-self: flex-end;
+  min-width: fit-content;
+  min-height: 3rem;
+  margin-left: auto; 
+
+}
+
+.card button:hover {
+  transform: scale(1.1);
+}
+
+.card button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 150px; /* Ajusta según sea necesario para cubrir el área deseada */
+  width: 20px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: skewX(45deg);
+  transition: 0.5s;
+}
+
+.card button:hover::before {
+  left: -80%; /* Cambiado para mover el pseudo-elemento fuera del botón en el estado normal */
+}
+
+.card .delete-button {
+  background: linear-gradient(to right top, #ff6b6b, #ff8e8e); /* Cambia a tu color deseado */
+  padding: 0.7rem; /* Ajusta según sea necesario */
+}
+
+.card .delete-button span {
+  color: white; /* Cambia a tu color deseado para el ícono */
+  font-size: medium;
+}
+
+.card .edit-button {
+  background: linear-gradient(to right top, #FDCD3E, #FFC009); /* Cambia a tu color deseado */
+  padding: 0.7rem; /* Ajusta según sea necesario */
+}
+
+.card .edit-button span {
+  color: white; /* Cambia a tu color deseado para el ícono */
+  font-size: medium;
+}
+
+
+
+/* ============ ESTILOS MODAL IMAGEN COMPLETA =============== */
+#myModal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 50px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.5);
+  transition: all 0.3s ease;
+  border-radius: 2rem;
+}
+
+#myModal img {
+  margin: auto;
+  display: block;
+  max-width: 80%;
+  max-height: 80%;
+}
+
+/* ============================================================= */
+
+
+
+h2 {
+  margin: 0; /* Elimina el margen superior predeterminado del h2 */
+}
+
+.theme {
+  margin-top: 5px; /* Ajusta según sea necesario para dar espacio entre el título y el select */
+}
+
+select {
+  width: 100%;
+  height: 2rem;
+  border-radius: 1rem;
+  border: none;
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.3)
+  );
+  color: #426696;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  align-self: flex-end;
+  min-width: fit-content;
+  min-height: 3rem;
+  margin-left: auto; /* Alinear el botón a la derecha usando margin-left: auto */
+}
+
+#selectTheme option {
+  width: 100%;
+  height: 2rem;
+  border-radius: 1rem;
+  border: none;
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.3)
+  );
+  color: #426696;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  align-self: flex-end;
+  min-width: fit-content;
+  min-height: 3rem;
+  margin-left: auto;
+}
+
+#selectTheme option:hover {
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.096)
+  );
+  font-weight: bold;
+
+  color: #426696;
+
+}
+
+.dropdown {
+  position: relative;
+  height: 53px;
+  width: 40px;
+  top: -24px;
+  display: flex;
+  left: -5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  ul {
+   position: absolute;
+   background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.3)
+   );
+   height: 110px;
+   width: 120px;
+   right: 0;
+   top: 20px;
+   pointer-events: none;
+   opacity: 0;
+   transform: translatey(10px);
+   transition: all 0.4s ease;
+   li a {
+    text-decoration: none;
+    color: #426696;
+    font-size: 12px;
+   }
+  }
+ }
+
+ .dropdown.is-active {
+  ul {
+   opacity: 1;
+   pointer-events: all;
+   transform: translatey(25px);
+   li:hover {
+    background-color: #426696;
+   }
+  }
+ }
+
+
+/* ============== BUTTON AGREGAR */
+ .status button {
+  position: relative; /* Añadido para que el pseudo-elemento sea relativo a este botón */
+  background: linear-gradient(to right top, #65dfc9, #6cdbeb);
+  border: none;
+  margin-left: 2rem;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  color: white;
+  font-weight: bold;
+  font-size: large;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  align-self: flex-end;
+  min-width: fit-content;
+  min-height: 3rem;
+  margin-left: auto; /* Alinear el botón a la derecha usando margin-left: auto */
+
+}
+
+.status button:hover {
+  transform: scale(1.1);
+}
+
+.status button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 185px; /* Ajusta según sea necesario para cubrir el área deseada */
+  width: 20px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: skewX(45deg);
+  transition: 0.5s;
+}
+
+.status button:hover::before {
+  left: -80%; /* Cambiado para mover el pseudo-elemento fuera del botón en el estado normal */
+}
+
+/* ============== MODAL CREAR ================== */
+
+.title-and-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Agrega espacio entre los elementos */
+  width: 100%;
+}
+
+
+.modal {
+  display: none; /* Oculta el modal por defecto */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 2rem;
+  background-color: rgba(0,0,0,0.7); /* Fondo oscuro semitransparente */
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 1rem;
+  width: 60%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.close {
+  float: right;
+  font-size: 32px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #f00;
+}
+
+/* ============== FORMULARIO ================== */
+
+.form{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+
+}
+.form h4{
+  position: relative;
+  color: #426696;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.form h4::before{
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 80px;
+  height: 4px;
+  background: #fff;
+}
+.form .inputBox{
+  width: 100%;
+  margin-top: 10px;
+}
+.form .inputBox input{
+  width: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  outline: none;
+  padding: 10px 20px;
+  border-radius: 35px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: #426696;
+  box-shadow: 0 5px 15px #65dfc945;
+}
+.form .inputBox input::placeholder{
+  color: #42669696;
+}
+.form .inputBox input[type="submit"]{
+  background: linear-gradient(to right top, #65dfc9, #6cdbeb);
+  border: none;
+  margin-left: 2rem;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  color: white;
+  font-weight: bold;
+  font-size: large;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  align-self: flex-end;
+  min-width: fit-content;
+  max-width: 5rem;
+  min-height: 3rem;
+  margin-top: 1rem;
+  margin-left: 80%; /* Alinear el botón a la derecha usando margin-left: auto */
+}
+
+.form .inputBox input[type="submit"]:hover {
+  transform: scale(1.1);
+}
+
+.form .inputBox input[type="submit"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20%; /* Ajustado para centrar el pseudo-elemento horizontalmente en el botón */
+  width: 20px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: skewX(45deg) translateX(-50%); /* Ajustado para centrar el pseudo-elemento en el botón */
+  transition: 0.5s;
+}
+
+.form .inputBox input[type="submit"]:hover::before {
+  left: -80%; /* Ajustado para mover el pseudo-elemento fuera del botón en el estado normal */
+}
+
+
+/* ============== MODAL ELIMINAR ================== */
+
+.modal-sm {
+  display: none; /* Oculta el modal por defecto */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 2rem;
+  background-color: rgba(0,0,0,0.7); /* Fondo oscuro semitransparente */
+}
+
+.modal-content-sm {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 1rem;
+  width: 40%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.close {
+  float: right;
+  font-size: 32px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #f00;
+}
+
+/* ============== BUTTON ELIMINAR */
+.modal-content-sm button {
+  position: relative; /* Añadido para que el pseudo-elemento sea relativo a este botón */
+  background: linear-gradient(to right top, #65dfc9, #6cdbeb);
+  border: none;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  color: white;
+  font-weight: bold;
+  font-size: medium;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  align-self: flex-end;
+  min-width: fit-content;
+  min-height: 3rem;
+  margin-top: 1rem;
+  margin-left: auto; /* Alinear el botón a la derecha usando margin-left: auto */
+
+}
+
+.modal-content-sm .button-delete {
+  background: linear-gradient(to right top, #ff6b6b, #ff8e8e); /* Cambia a tu color deseado */
+  padding: 0.7rem; /* Ajusta según sea necesario */
+  margin-left: 55%;
+  margin-right: 0.5rem;
+}
+
+.modal-content-sm button:hover {
+  transform: scale(1.1);
+}
+
+.modal-content-sm button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 185px; /* Ajusta según sea necesario para cubrir el área deseada */
+  width: 20px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: skewX(45deg);
+  transition: 0.5s;
+}
+
+.modal-content-sm button:hover::before {
+  left: -80%; /* Cambiado para mover el pseudo-elemento fuera del botón en el estado normal */
+}
